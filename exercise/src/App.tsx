@@ -1,14 +1,20 @@
 import React, {useState} from 'react';
 import './App.css';
 
+interface intList{
+  name:string;
+}
+
 function App() {
 
-  const [name, setName] = useState('');
   const [newName, setNewName] = useState('');
+  const [newList, setNewList] = useState<intList[]>([]);
 
 
   const handleName = (name: string) =>{
-    setName(name)
+      const list: intList[] = [...newList, {name}];
+      setNewList(list)
+      console.log(list)
   }
 
 
@@ -26,8 +32,11 @@ function App() {
           <input type="text" onChange={e => setNewName(e.target.value)}  />
           <button onClick={() => handleName(newName)}>send</button>
         </form>
-
-        <h1>{name}</h1>
+        {
+          newList.map((l:intList, i: number)=>{
+              return <h1 key={i}>{l.name}</h1>
+          })
+      }
     </div>
   );
 }
