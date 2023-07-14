@@ -1,33 +1,50 @@
 import React, {useState} from 'react';
+import { set, useForm } from "react-hook-form";
 import './App.css';
+import Lista from './Components/Lista';
+import { intList } from './Components/Interfaces';
+import Form from './Components/Form'
+
+interface IntObj{
+  name:string;
+  email:string;
+  edad: number;
+
+}
 
 function App() {
 
-  const [name, setName] = useState('');
   const [newName, setNewName] = useState('');
-
+  var [newList, setNewList] = useState<intList[]>([]);
+  const [id,setId] = useState<number>(0);
+  var count:number = id;
+  var list:intList[] = []
 
   const handleName = (name: string) =>{
-    setName(name)
+      list = [...newList, {name,id}];
+      count++;
+      setId(count);
+      setNewList(list);
+      setNewName('');
+
   }
 
-
-
-  /*
-  const handleName = (e: React.FormEvent<HTMLFormElement>) =>{
-    e.preventDefault();
-    console.log(name)
+  const handleList =(listaActualizada:intList[])=>{
+    setNewList(listaActualizada)
   }
-  */
 
   return (
     <div className="App">
         <form onSubmit={e => e.preventDefault()} >
-          <input type="text" onChange={e => setNewName(e.target.value)}  />
+          <h1>primer lista:</h1>
+          <input type="text" onChange={e => setNewName(e.target.value)} value={newName}  />
           <button onClick={() => handleName(newName)}>send</button>
         </form>
-
-        <h1>{name}</h1>
+        <div>
+            <Lista newList={newList} retornarLista={handleList}  />
+            <Form/>
+            
+        </div>
     </div>
   );
 }
