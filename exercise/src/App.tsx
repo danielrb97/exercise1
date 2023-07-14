@@ -5,12 +5,7 @@ import Lista from './Components/Lista';
 import { intList } from './Components/Interfaces';
 import Form from './Components/Form'
 
-interface IntObj{
-  name:string;
-  email:string;
-  edad: number;
 
-}
 
 function App() {
 
