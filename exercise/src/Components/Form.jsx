@@ -13,7 +13,7 @@ function Form() {
   const [newEmai, setNewEmail] = useState('');
   const [newPass, setNewPass] = useState('');
 
-  const onSubmitHandler  = (data:IntObj) =>{
+  const onSubmitHandler  = (data) =>{
     setNewUser(data);
     console.log(data);
     setNewName(data.name);

@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import { set, useForm } from "react-hook-form";
 import './App.css';
 import Lista from './Components/Lista';
 import { intList } from './Components/Interfaces';
@@ -24,9 +23,9 @@ function App() {
 
   }
 
-  const handleList =(listaActualizada:intList[])=>{
-    setNewList(listaActualizada)
-  }
+  const handleDelete = (index:number)=>{setNewList(newList.filter(a => a.id !== newList[index].id))}
+  
+  const borrarTodo=()=>{setNewList([])}
 
   return (
     <div className="App">
@@ -36,9 +35,8 @@ function App() {
           <button onClick={() => handleName(newName)}>send</button>
         </form>
         <div>
-            <Lista newList={newList} retornarLista={handleList}  />
+            <Lista newList={newList} handleDelete={handleDelete}  borrarTodo={borrarTodo} />
             <Form/>
-            
         </div>
     </div>
   );

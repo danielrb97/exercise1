@@ -1,37 +1,18 @@
-import React, {useEffect, useState}from 'react';
-import { intList } from './Interfaces';
+//dummy component
 
+const Lista = ({newList, handleDelete, borrarTodo})=> (
 
-function Lista({newList, retornarLista}) {
-  const [lista, setLista] = useState(newList);
-  
-  useEffect(()=>{
-    setLista(newList);
-  },[newList])
-
-  const handleDelete = (index)=>{
-    setLista(lista.filter(a => a.id !== lista[index].id))
-    retornarLista(lista);
-  }
-  
-  const borrarTodo=()=>{
-    setLista([]);
-    console.log(lista)
-    retornarLista(lista);
-  }
- 
-  return (
-    <div>
+    //fragments are used when we want to wrap something and that doesnt need a style
+    <>
         <ul>
             {
-                lista.map((list,index)=>(
-                    <li key={list.id}>{list.name}<button onClick={() => handleDelete(index)}>x</button></li>
+                newList.map((list,index)=>(
+                    <li key={list.index}>{list.name}<button onClick={() => handleDelete(index)}>x</button></li>
                 ))
             }
         </ul>
-        <button onClick={() => borrarTodo()}>Borrar Todo</button>
-    </div>   
-  );
-}
+        <button onClick={borrarTodo}>Borrar Todo</button>
+    </>   
+)
 
 export default Lista;
