@@ -1,6 +1,7 @@
 export interface intList{
-    name:string;
     id:number;
+    task:string;
+    completed:boolean;
 }
 
 export interface IntObj{

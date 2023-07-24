@@ -1,43 +1,56 @@
-import React, {useState} from 'react';
-import './App.css';
-import Lista from './Components/Lista';
-import { intList } from './Components/Interfaces';
-import Form from './Components/Form'
-
-
+import React, { useState } from "react";
+import "./App.css";
+import { intList } from "./Components/Interfaces";
+import TodoList from "./Components/TodoList";
+import AddItem from "./Components/AddItem";
 
 function App() {
+  const [id, setId] = useState<number>(0);
+  var count: number = id;
 
-  const [newName, setNewName] = useState('');
-  var [newList, setNewList] = useState<intList[]>([]);
-  const [id,setId] = useState<number>(0);
-  var count:number = id;
-  var list:intList[] = []
+  const [listaTareas, setListaTareas] = useState<intList[]>([]);
 
-  const handleName = (name: string) =>{
-      list = [...newList, {name,id}];
-      count++;
-      setId(count);
-      setNewList(list);
-      setNewName('');
+  const handleItem = (task: string) => {
+    setListaTareas([...listaTareas, { id: id, task: task, completed: false }]);
+    count++;
+    setId(count);
+  };
 
+  const handleCheckBox = (id: number) => {
+    setListaTareas(
+      listaTareas.map((item) => {
+        return item.id === Number(id)
+          ? { ...item, completed: !item.completed }
+          : { ...item };
+      })
+    );
+  };
+
+  const handleDelete = (index: number) => {
+    setListaTareas(listaTareas.filter((a) => a.id !== index));
+  };
+
+  const borrarTodo = () => {
+    setListaTareas([]);
+  };
+
+  const editTask= (id:number,newtask:string) =>  {
+    setListaTareas(
+      listaTareas.map((item)=>{
+        return item.id === Number(id) ? {...item, task:newtask} : {...item};
+      })
+    )
   }
-
-  const handleDelete = (index:number)=>{setNewList(newList.filter(a => a.id !== newList[index].id))}
-  
-  const borrarTodo=()=>{setNewList([])}
-
   return (
     <div className="App">
-        <form onSubmit={e => e.preventDefault()} >
-          <h1>primer lista:</h1>
-          <input type="text" onChange={e => setNewName(e.target.value)} value={newName}  />
-          <button onClick={() => handleName(newName)}>send</button>
-        </form>
-        <div>
-            <Lista newList={newList} handleDelete={handleDelete}  borrarTodo={borrarTodo} />
-            <Form/>
-        </div>
+      <AddItem handleItem={handleItem} />
+      <TodoList
+        borrarTodo={borrarTodo}
+        listaTareas={listaTareas}
+        handleCheckBox={handleCheckBox}
+        handleDelete={handleDelete}
+        editTask={editTask}
+      />
     </div>
   );
 }
