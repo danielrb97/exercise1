@@ -6,14 +6,14 @@ const TodoList = ({
   handleCheckBox,
   handleDelete,
   borrarTodo,
-  editTask
+  editTask,
 }) => (
   <div className="List-container">
-    {listaTareas.map((items, index) => {
+    {listaTareas.map((item, index) => {
       return (
         <TodoItem
           key={index}
-          items={items}
+          items={item}
           handleCheckBox={handleCheckBox}
           handleDelete={handleDelete}
           editTask={editTask}
@@ -25,9 +25,7 @@ const TodoList = ({
         borrarTodo={borrarTodo}
         Atributte={{ text: "Borrar todo alv" }}
       />
-    ) : (
-      <></>
-    )}
+    ) : null}
   </div>
 );
 

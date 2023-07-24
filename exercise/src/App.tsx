@@ -6,14 +6,14 @@ import AddItem from "./Components/AddItem";
 
 function App() {
   const [id, setId] = useState<number>(0);
-  var count: number = id;
+  // var count: number = id;
 
   const [listaTareas, setListaTareas] = useState<intList[]>([]);
 
   const handleItem = (task: string) => {
     setListaTareas([...listaTareas, { id: id, task: task, completed: false }]);
-    count++;
-    setId(count);
+    // count++;
+    setId(id + 1);
   };
 
   const handleCheckBox = (id: number) => {
@@ -34,13 +34,16 @@ function App() {
     setListaTareas([]);
   };
 
-  const editTask= (id:number,newtask:string) =>  {
+  const editTask = (id: number, newtask: string) => {
     setListaTareas(
-      listaTareas.map((item)=>{
-        return item.id === Number(id) ? {...item, task:newtask} : {...item};
+      listaTareas.map((item) => {
+        return item.id === Number(id)
+          ? { ...item, task: newtask }
+          : { ...item };
       })
-    )
-  }
+    );
+  };
+  
   return (
     <div className="App">
       <AddItem handleItem={handleItem} />
