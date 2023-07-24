@@ -1,10 +1,12 @@
-# Must
+# Julio 24, 2023
+
+### Must
 - Idear o buscar otro algoritmo diferente para mi funcion handle checkbox
   - Investigar si en el handle checkbox puedo usar una funcion diferente a map - para evitar recorrer todo el arreglo sin ser necesario
 
 - Despues de idear un algoritmo diferente para `handleCheckbox` y `editTask` evaluar si es posible hacer una funcion reutilizable.
 
-# Codigo
+### Codigo
 - usar uuidv4() para id's
 - Agregar mas campos al forma
 - Agregar validaciones a la forma
@@ -13,7 +15,7 @@
 - agregar un poco mas de react-hook-form
 - limpiar lo que no estoy usando
 
-# Investigar
+### Investigar
 - Investigar prop drilling y como solucionarlo
 - Investigar sobre JSX
 - Porque usar === en lugar de ==
