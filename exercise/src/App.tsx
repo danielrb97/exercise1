@@ -3,19 +3,40 @@ import "./App.css";
 import { intList } from "./Components/Interfaces";
 import TodoList from "./Components/TodoList";
 import AddItem from "./Components/AddItem";
+const { v4: uuidv4 } = require('uuid');
 
 function App() {
-  const [id, setId] = useState<number>(0);
-  // var count: number = id;
+  const [id, setId] = useState<string>('');
 
   const [listaTareas, setListaTareas] = useState<intList[]>([]);
 
   const handleItem = (task: string) => {
     setListaTareas([...listaTareas, { id: id, task: task, completed: false }]);
-    // count++;
-    setId(id + 1);
+    setId(uuidv4());
   };
 
+  const handleDelete = (index: string) => {
+    setListaTareas(listaTareas.filter((a) => a.id !== index));
+  };
+
+  const delAll = () => {
+    setListaTareas([]);
+  };
+
+
+  const editTask = (id:string, newtask: string) => {
+    setListaTareas(
+      listaTareas.map((item) => {
+        return item.id === id
+          ? newtask === "checkbox"
+            ? { ...item, completed: !item.completed }
+            : { ...item, task: newtask }
+          : { ...item };
+      })
+    );
+  };
+ 
+  /*
   const handleCheckBox = (id: number) => {
     setListaTareas(
       listaTareas.map((item) => {
@@ -25,32 +46,13 @@ function App() {
       })
     );
   };
-
-  const handleDelete = (index: number) => {
-    setListaTareas(listaTareas.filter((a) => a.id !== index));
-  };
-
-  const borrarTodo = () => {
-    setListaTareas([]);
-  };
-
-  const editTask = (id: number, newtask: string) => {
-    setListaTareas(
-      listaTareas.map((item) => {
-        return item.id === Number(id)
-          ? { ...item, task: newtask }
-          : { ...item };
-      })
-    );
-  };
-  
+  */
   return (
     <div className="App">
       <AddItem handleItem={handleItem} />
       <TodoList
-        borrarTodo={borrarTodo}
+        delAll={delAll}
         listaTareas={listaTareas}
-        handleCheckBox={handleCheckBox}
         handleDelete={handleDelete}
         editTask={editTask}
       />

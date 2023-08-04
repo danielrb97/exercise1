@@ -3,9 +3,8 @@ import DeleteAll from "./DeleteAll";
 
 const TodoList = ({
   listaTareas,
-  handleCheckBox,
   handleDelete,
-  borrarTodo,
+  delAll,
   editTask,
 }) => (
   <div className="List-container">
@@ -14,7 +13,6 @@ const TodoList = ({
         <TodoItem
           key={index}
           items={item}
-          handleCheckBox={handleCheckBox}
           handleDelete={handleDelete}
           editTask={editTask}
         />
@@ -22,7 +20,7 @@ const TodoList = ({
     })}
     {listaTareas.length != 0 ? (
       <DeleteAll
-        borrarTodo={borrarTodo}
+        delAll={delAll}
         Atributte={{ text: "Borrar todo alv" }}
       />
     ) : null}

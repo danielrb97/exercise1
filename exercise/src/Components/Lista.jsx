@@ -5,7 +5,6 @@ import DeleteAll from "./DeleteAll";
 
 function Lista({ newList, itemId, handleDelete, borrarTodo, handleCheck }) {
     
-  const [checked, setChecked] = useState(false);
   const [id, setId] = useState(Number);
 
   useEffect(()=>{

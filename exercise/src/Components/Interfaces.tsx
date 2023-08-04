@@ -1,5 +1,5 @@
 export interface intList {
-  id: number;
+  id: string;
   task: string;
   completed: boolean;
 }

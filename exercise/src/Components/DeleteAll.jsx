@@ -1,5 +1,5 @@
-const DeleteAll = ({ Atributte, borrarTodo }) => (
-  <button className="borrarTodoButton" onClick={borrarTodo}>
+const DeleteAll = ({ Atributte, delAll }) => (
+  <button className="borrarTodoButton" onClick={delAll}>
     {Atributte.text}
   </button>
 );

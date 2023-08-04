@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { set, useForm } from "react-hook-form";
 
-function TodoItem({ items, handleCheckBox, handleDelete, editTask }) {
+function TodoItem({ items, handleDelete, editTask }) {
   const getStyle = () => {
     return {
       textDecoration: items.completed ? "line-through" : "none",
@@ -14,23 +15,28 @@ function TodoItem({ items, handleCheckBox, handleDelete, editTask }) {
     };
   };
   const editAtribute = (id) => {
+    console.log(items);
     setHandleDisabled(!handleDisabled);
     editTask(id, updateTask);
   };
 
   const [updateTask, setUpdateTask] = useState("");
   const [handleDisabled, setHandleDisabled] = useState(true);
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   return (
     <div className="item-container">
-      <input
-        type="checkbox"
-        checked={items.completed}
-        onChange={() => handleCheckBox(items.id)}
-        className="checkbox"
-        style={getStyleCheck()}
-      />
-      <>
+      <form onSubmit={e=>e.preventDefault()}>
+        <input
+          type="checkbox"
+          checked={items.completed}
+          onChange={() => editTask(items.id, "checkbox")}
+          className="checkbox"
+          style={getStyleCheck()}
+        />
         <input
           style={getStyle()}
           type="text"
@@ -40,20 +46,20 @@ function TodoItem({ items, handleCheckBox, handleDelete, editTask }) {
           onChange={(e) => setUpdateTask(e.target.value)}
           disabled={handleDisabled}
         />
-      </>
-      {handleDisabled == true ? (
-        <button className="EditButton" onClick={() => editAtribute(items.id)}>
-          Edit
-        </button>
-      ) : (
-        <button className="DoneButton" onClick={() => editAtribute(items.id)}>
-          Done
-        </button>
-      )}
+        {handleDisabled == true ? (
+          <button className="EditButton" onClick={() => editAtribute(items.id)}>
+            Edit
+          </button>
+        ) : (
+          <button className="DoneButton" onClick={() => editAtribute(items.id)}>
+            Done
+          </button>
+        )}
 
-      <button className="DeleteButton" onClick={() => handleDelete(items.id)}>
-        x
-      </button>
+        <button className="DeleteButton" onClick={() => handleDelete(items.id)}>
+          x
+        </button>
+      </form>
     </div>
   );
 }
