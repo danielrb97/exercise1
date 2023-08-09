@@ -7,3 +7,15 @@ const DeleteAll = ({ Atributte, state }) => (
 );
 
 export default DeleteAll;
+
+/*
+const DeleteAll = props => (
+  <>
+    <button className="DeleteAllButton" onClick={() => props.calando()}>
+      {props.children}
+    </button>
+  </>
+);
+
+export default DeleteAll;
+*/

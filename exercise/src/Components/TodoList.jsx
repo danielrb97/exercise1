@@ -2,24 +2,23 @@ import TodoItem from "./TodoItem";
 import DeleteAll from "./DeleteAll";
 
 const TodoList = ({
-  listaTareas,
+  taskList,
   handleDelete,
   delAll,
   editTask,
   DeleteDoneTasks
 }) => (
   <div className="List-container">
-    {listaTareas.map((item, index) => {
+    {taskList.map((item, index) => {
       return (
         <TodoItem
-          key={index}
           items={item}
           handleDelete={handleDelete}
           editTask={editTask}
         />
       );
     })}
-    {listaTareas.length !== 0 ? (
+    {taskList.length !== 0 ? (
       <div>
         <DeleteAll
           state={delAll}

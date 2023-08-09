@@ -8,25 +8,25 @@ const { v4: uuidv4 } = require("uuid");
 function App() {
   const [id, setId] = useState<string>("");
   const [darkTheme, setDarkTheme] = useState("white")
-  const [listaTareas, setListaTareas] = useState<intList[]>([]);
+  const [taskList, setTaskList] = useState<intList[]>([]);
   
   const handleItem = (task: string) => {
-    setListaTareas([...listaTareas, { id: id, task: task, completed: false }]);
+    setTaskList([...taskList, { id: id, task: task, completed: false }]);
     setId(uuidv4());
   };
 
   const handleDelete = (index: string) => {
-    setListaTareas(listaTareas.filter((a) => a.id !== index));
+    setTaskList(taskList.filter((a) => a.id !== index));
   };
 
   const delAll = () => {
-    setListaTareas([]);
+    setTaskList([]);
   };
 
   const editTask = (id: string, newtask: string) => {
-    console.log(listaTareas);
-    setListaTareas(
-      listaTareas.map((item) => {
+    console.log(taskList);
+    setTaskList(
+      taskList.map((item) => {
         return item.id === id
           ? newtask === "checkbox"
             ? { ...item, completed: !item.completed }
@@ -37,7 +37,7 @@ function App() {
   };
 
   const DeleteDoneTasks = () => {
-    setListaTareas(listaTareas.filter((a) => a.completed !== true));
+    setTaskList(taskList.filter((a) => a.completed !== true));
   };
 
   const ChangeTheme = (color:string) => {
@@ -56,7 +56,7 @@ function App() {
         <TodoList
           DeleteDoneTasks={DeleteDoneTasks}
           delAll={delAll}
-          listaTareas={listaTareas}
+          taskList={taskList}
           handleDelete={handleDelete}
           editTask={editTask}
         />      
