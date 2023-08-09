@@ -6,6 +6,7 @@ const TodoList = ({
   handleDelete,
   delAll,
   editTask,
+  DeleteDoneTasks
 }) => (
   <div className="List-container">
     {listaTareas.map((item, index) => {
@@ -18,11 +19,18 @@ const TodoList = ({
         />
       );
     })}
-    {listaTareas.length != 0 ? (
-      <DeleteAll
-        delAll={delAll}
-        Atributte={{ text: "Borrar todo alv" }}
-      />
+    {listaTareas.length !== 0 ? (
+      <div>
+        <DeleteAll
+          state={delAll}
+          Atributte={{ text: "Borrar todo alv" }}
+        />
+        <DeleteAll
+        state={DeleteDoneTasks}
+        Atributte={{ text: "Borrar tareas terminadas" }}
+        />
+      </div>
+      
     ) : null}
   </div>
 );
