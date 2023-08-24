@@ -6,7 +6,7 @@ const TodoList = ({
   handleDelete,
   delAll,
   editTask,
-  DeleteDoneTasks
+  DeleteDoneTasks,
 }) => (
   <div className="List-container">
     {taskList.map((item, index) => {

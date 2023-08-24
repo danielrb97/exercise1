@@ -3,13 +3,14 @@ import "./App.css";
 import { intList } from "./Components/Interfaces";
 import TodoList from "./Components/TodoList";
 import AddItem from "./Components/AddItem";
+import SelectButton from "./Components/Select";
 const { v4: uuidv4 } = require("uuid");
 
 function App() {
   const [id, setId] = useState<string>("");
-  const [darkTheme, setDarkTheme] = useState("white")
+  const [darkTheme, setDarkTheme] = useState("white");
   const [taskList, setTaskList] = useState<intList[]>([]);
-  
+
   const handleItem = (task: string) => {
     setTaskList([...taskList, { id: id, task: task, completed: false }]);
     setId(uuidv4());
@@ -23,43 +24,49 @@ function App() {
     setTaskList([]);
   };
 
-  const editTask = (id: string, newtask: string) => {
-    console.log(taskList);
-    setTaskList(
-      taskList.map((item) => {
-        return item.id === id
-          ? newtask === "checkbox"
-            ? { ...item, completed: !item.completed }
-            : { ...item, task: newtask }
-          : { ...item };
-      })
-    );
+  const editTask = (newItem: intList, value: string): void => {
+    const indexItem = taskList.findIndex((item, index) => {
+      return item.id === newItem.id;
+    });
+    if (value === "input-type-checkbox") {
+      newItem.completed = !newItem.completed;
+    } else {
+      newItem.task = value;
+    }
+    const copyList = [...taskList];
+    copyList[indexItem] = newItem;
+    setTaskList(copyList);
   };
 
   const DeleteDoneTasks = () => {
     setTaskList(taskList.filter((a) => a.completed !== true));
   };
 
-  const ChangeTheme = (color:string) => {
-    setDarkTheme(color)
-    document.documentElement.style.setProperty('--main-bg-color', color);
+  const ChangeTheme = (color: string) => {
+    setDarkTheme(color);
+    document.documentElement.style.setProperty("--main-bg-color", color);
   };
   return (
-    
-    <div className={darkTheme === "white" ? 'App': 'App-darkTheme'}>
-      <select className="select-box" name="changeStyle" onChange={(e) => ChangeTheme(e.target.value)} >
-        <option value="white" selected>light</option>
-        <option value="black" >dark</option>
-      </select>
+    <div className={darkTheme === "white" ? "App" : "App-darkTheme"}>
+      <SelectButton
+        Atributte={{
+          name: "changeStyle",
+          value: "white",
+          value2: "black",
+          text: "light",
+          text2: "dark",
+        }}
+        state={ChangeTheme}
+      />
 
       <AddItem handleItem={handleItem} />
-        <TodoList
-          DeleteDoneTasks={DeleteDoneTasks}
-          delAll={delAll}
-          taskList={taskList}
-          handleDelete={handleDelete}
-          editTask={editTask}
-        />      
+      <TodoList
+        DeleteDoneTasks={DeleteDoneTasks}
+        delAll={delAll}
+        taskList={taskList}
+        handleDelete={handleDelete}
+        editTask={editTask}
+      />
     </div>
   );
 }
