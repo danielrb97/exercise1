@@ -1,19 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, createContext } from "react";
 import "./App.css";
+import DoneItems from "./Components/DoneItems";
 import { intList } from "./Components/Interfaces";
 import TodoList from "./Components/TodoList";
 import AddItem from "./Components/AddItem";
 import SelectButton from "./Components/Select";
+import StateCompo from "./context/StateCompo";
 const { v4: uuidv4 } = require("uuid");
 
 function App() {
-  const [id, setId] = useState<string>("");
   const [darkTheme, setDarkTheme] = useState("white");
   const [taskList, setTaskList] = useState<intList[]>([]);
+  const [tasksDone, setTaskDone] = useState<intList[]>([]);
 
   const handleItem = (task: string) => {
-    setTaskList([...taskList, { id: id, task: task, completed: false }]);
-    setId(uuidv4());
+    setTaskList([...taskList, { id: uuidv4(), task: task, completed: false }]);
   };
 
   const handleDelete = (index: string) => {
@@ -39,6 +40,9 @@ function App() {
   };
 
   const DeleteDoneTasks = () => {
+    const done = taskList.filter((a) => a.completed === true);
+    Array.prototype.push.apply(tasksDone, done);
+    console.log(tasksDone);
     setTaskList(taskList.filter((a) => a.completed !== true));
   };
 
@@ -47,27 +51,30 @@ function App() {
     document.documentElement.style.setProperty("--main-bg-color", color);
   };
   return (
-    <div className={darkTheme === "white" ? "App" : "App-darkTheme"}>
-      <SelectButton
-        Atributte={{
-          name: "changeStyle",
-          value: "white",
-          value2: "black",
-          text: "light",
-          text2: "dark",
-        }}
-        state={ChangeTheme}
-      />
+    <StateCompo>
+      <div className={darkTheme === "white" ? "App" : "App-darkTheme"}>
+        <SelectButton
+          Atributte={{
+            name: "changeStyle",
+            value: "white",
+            value2: "black",
+            text: "light",
+            text2: "dark",
+          }}
+          state={ChangeTheme}
+        />
 
-      <AddItem handleItem={handleItem} />
-      <TodoList
-        DeleteDoneTasks={DeleteDoneTasks}
-        delAll={delAll}
-        taskList={taskList}
-        handleDelete={handleDelete}
-        editTask={editTask}
-      />
-    </div>
+        <AddItem handleItem={handleItem} />
+        <TodoList
+          DeleteDoneTasks={DeleteDoneTasks}
+          delAll={delAll}
+          taskList={taskList}
+          handleDelete={handleDelete}
+          editTask={editTask}
+        />
+        <DoneItems></DoneItems>
+      </div>
+    </StateCompo> 
   );
 }
 

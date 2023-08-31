@@ -1,8 +1,11 @@
-import React, { useState } from "react";
+import React, { useState,useContext } from "react";
 import { useForm } from "react-hook-form";
+import { userContext } from "../context/counterContext";
 
 export default function AddItem({ handleItem }) {
   const [newItem, setNewItem] = useState("");
+  const { handleUser, user, editUser, setEditUser } = useContext(userContext);
+
   const {
     register,
     handleSubmit,
@@ -17,6 +20,7 @@ export default function AddItem({ handleItem }) {
   return (
     <div className="addItem-container">
       <form onSubmit={handleSubmit(handleNewItem)}>
+        <h1>{user}</h1>
         <h1>Task List!</h1>
         <input
           value={newItem}

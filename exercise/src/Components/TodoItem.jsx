@@ -1,42 +1,33 @@
-import { useState } from "react";
+import { useState  } from "react";
 import SelectButton from "./Select";
-import { useForm } from "react-hook-form";
 
 function TodoItem({ items, handleDelete, editTask }) {
+  
   const getStyle = () => {
     return {
       textDecoration: items.completed ? "line-through" : "none",
       border: handleDisabled === true ? "none" : "",
-      fontStyle: handleFontStyle === "normal" ? null : "italic",
+      fontStyle: handleFontStyle === "normal" ? null : "italic" 
     };
   };
 
   const getStyleCheck = () => {
     return {
-      display: items.task === "" ? "none" : "",
+      display:  items.task === "" ? "none" : "",
     };
   };
+  const editAtribute = (item) => {
+    console.log("hola mundo",items);
+    setHandleDisabled(!handleDisabled);
+  };
   
-
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
   const [handleDisabled, setHandleDisabled] = useState(true);
-  const [handleFontStyle, setHandleFontStyle] = useState("normal");
+  const [handleFontStyle,  setHandleFontStyle] = useState('normal')
+
 
   return (
     <div className="item-container">
-      <form
-        onSubmit={(e) =>
-          handleSubmit(
-            setHandleDisabled(!handleDisabled),
-            e.preventDefault(),
-            editTask(items, e.target.value)
-          )
-        }
-      >
+      <form onSubmit={e=>e.preventDefault()}>
         <input
           type="checkbox"
           name="input-type-checkbox"
@@ -48,42 +39,38 @@ function TodoItem({ items, handleDelete, editTask }) {
         <input
           style={getStyle()}
           type="text"
-          placeholder={items.task}
+          placeholder= {items.task}
           value={items.task}
-          name="ItemList"
+          name="input-type-text-editItem"
           id="ItemList"
+          onChange={(e) => editTask(items,e.target.value)}
           disabled={handleDisabled}
           minLength={5}
           maxLength={50}
-          {...register("ItemList")}
-          required
         />
-        {errors.ItemList?.message && (
-          <div>
-            <small>{errors.ItemList.message}</small>
-          </div>
-        )}
-
+        
         {handleDisabled === true ? (
-          <button className="EditButton">Edit</button>
+          <button className="EditButton" onClick={() => setHandleDisabled(!handleDisabled)}>
+            Edit
+          </button>
         ) : (
-          <button className="DoneButton">Done</button>
+          <button className="DoneButton" onClick={() => editAtribute(!handleDisabled)}>
+            Done
+          </button>
         )}
-
+        
         <button className="DeleteButton" onClick={() => handleDelete(items.id)}>
           x
         </button>
-
-        <SelectButton
-          Atributte={{
-            name: "changeStyle",
-            value: "normal",
-            value2: "italica",
-            text: "Normal",
-            text2: "Italica",
-          }}
-          state={setHandleFontStyle}
-        />
+        
+        <SelectButton Atributte={{
+          name:"changeStyle",
+          value:"normal",
+          value2:"italica",
+          text:"Normal",
+          text2:"Italica"
+        }}
+        state={setHandleFontStyle}/>
       </form>
     </div>
   );
