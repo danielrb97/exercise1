@@ -5,7 +5,7 @@ import { intList } from "./Components/Interfaces";
 import TodoList from "./Components/TodoList";
 import AddItem from "./Components/AddItem";
 import SelectButton from "./Components/Select";
-import StateCompo from "./context/StateCompo";
+import ListContextProvider from "./context/StateCompo";
 const { v4: uuidv4 } = require("uuid");
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
     document.documentElement.style.setProperty("--main-bg-color", color);
   };
   return (
-    <StateCompo>
+    <ListContextProvider>
       <div className={darkTheme === "white" ? "App" : "App-darkTheme"}>
         <SelectButton
           Atributte={{
@@ -72,9 +72,9 @@ function App() {
           handleDelete={handleDelete}
           editTask={editTask}
         />
-        <DoneItems></DoneItems>
+        <DoneItems />
       </div>
-    </StateCompo> 
+    </ListContextProvider>
   );
 }
 

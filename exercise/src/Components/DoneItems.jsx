@@ -1,27 +1,30 @@
-import React, { useContext } from "react";
-import { userContext } from "../context/counterContext";
+import React, { useContext, useState } from "react";
+import { ListContext } from "../context/StateCompo";
+import { useForm } from "react-hook-form";
 
 function DoneItems() {
-  const { handleUser, user, editUser, setEditUser } = useContext(userContext);
+  const { user, editUser } = useContext(ListContext);
+  const [isEditUser, setEditUser] = useState(false);
+  const { handleSubmit, register } = useForm({ defaultValues: { user } });
+
+  const submit = (values) => {
+    editUser(values.user);
+    setEditUser(!isEditUser);
+  };
 
   return (
     <>
       <div className="App">
         <h1>{user}</h1>
         <h2>User info</h2>
-        <form onSubmit={(e) => e.preventDefault()}>
-          {editUser === true ? (
+        <form onSubmit={handleSubmit(submit)}>
+          {isEditUser ? (
             <>
-              <input
-                type="text"
-                placeholder={user}
-                value={user}
-                onChange={(e) => handleUser(e.target.value)}
-              />
-              <button onClick={() => setEditUser(!editUser)}>Done</button>
+              <input type="text" id="user" {...register("user")} />
+              <button type="submit">Done</button>
             </>
           ) : (
-            <button onClick={() => setEditUser(!editUser)}>
+            <button onClick={() => setEditUser(!isEditUser)}>
               Edit User Name
             </button>
           )}

@@ -1,10 +1,10 @@
-import React, { useState,useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useForm } from "react-hook-form";
-import { userContext } from "../context/counterContext";
+import { ListContext } from "../context/StateCompo";
 
 export default function AddItem({ handleItem }) {
   const [newItem, setNewItem] = useState("");
-  const { handleUser, user, editUser, setEditUser } = useContext(userContext);
+  const { user } = useContext(ListContext);
 
   const {
     register,
