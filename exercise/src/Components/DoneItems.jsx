@@ -1,36 +1,40 @@
-import React, { useContext, useState } from "react";
-import { ListContext } from "../context/StateCompo";
+import React, { useContext } from "react";
+import { ListContext } from "../context/ListContext";
 import { useForm } from "react-hook-form";
 
 function DoneItems() {
-  const { user, editUser } = useContext(ListContext);
-  const [isEditUser, setEditUser] = useState(false);
-  const { handleSubmit, register } = useForm({ defaultValues: { user } });
+  const { userArray, addUser, deleteUser } = useContext(ListContext);
+  // const [isEditUser, setEditUser] = useState(false);
+  const { handleSubmit, register } = useForm();
 
   const submit = (values) => {
-    editUser(values.user);
-    setEditUser(!isEditUser);
+    console.log(values.user);
+    addUser(values.user);
+    //   editUser(values.user);
+    //   setEditUser(!isEditUser);
   };
 
   return (
-    <>
-      <div className="App">
-        <h1>{user}</h1>
-        <h2>User info</h2>
-        <form onSubmit={handleSubmit(submit)}>
-          {isEditUser ? (
-            <>
-              <input type="text" id="user" {...register("user")} />
-              <button type="submit">Done</button>
-            </>
-          ) : (
-            <button onClick={() => setEditUser(!isEditUser)}>
-              Edit User Name
-            </button>
-          )}
-        </form>
-      </div>
-    </>
+    <div className="App">
+      <h2>User info</h2>
+      <form onSubmit={handleSubmit(submit)}>
+        <>
+          <input type="text" id="user" {...register("user")} />
+          <button type="submit">Add</button>
+        </>
+        {/* <button onClick={() => setEditUser(!isEditUser)}>Edit User Name</button> */}
+      </form>
+      <>
+        {userArray.map(({ user, id }) => {
+          return (
+            <div key={id}>
+              <button onClick={() => deleteUser(id)}>Delete</button>
+              <>{user}</>
+            </div>
+          );
+        })}
+      </>
+    </div>
   );
 }
 
